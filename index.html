@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coffee Menu</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.12/vue.js"></script>
+    <script src="../js/vue.js"></script>
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>   
+    <div id="app">
+        <h1>Coffee Menu</h1>
+        <p>Please choose your favorite coffee and size.</p>
+        <p>お好きなコーヒーとサイズをお選びください。</p>
+        <div class="coffeeType" v-for="(coffee,cid) in coffees">
+            <div class="num">0{{ cid }}</div>
+            <div class="cupContainer">
+                <div class="cup" :class="[coffee.type]">
+                    <div class="ingradients">
+                        <div class="coffee" :style="{ height: coffee.coffee + '%' }"></div>
+                        <div class="milk" :style="{ height: coffee.milk + '%' }"></div>
+                        <div class="water" :style="{ height: coffee.water + '%' }"></div>
+                        <div class="bubble" :style="{ height: coffee.bubble + '%' }"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="control">
+                <h2>{{ coffee.name }}</h2>
+                <select v-model="coffee.type">
+                    <option v-for="cupType in cupTypes" :value="cupType">{{cupType}}</option>
+                </select>
+                <div v-for="type in ['coffee','bubble','water','milk']">
+                    <label>{{type}}</label>
+                    <input type="range" v-model="coffee[type]" min="0" max="100"/>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                editing: false,
+                cupTypes: ['small','medium','big'],
+                coffees: [
+                {name: "Expresso",
+                coffee: 80,bubble: 0,water: 0,milk: 0,type: "small"},
+                {name: "Americano",
+                coffee: 40,bubble: 0,water: 40,milk: 0,type: "small"},
+                {name: "Cappuccino",
+                coffee: 40,bubble: 0,water: 0,milk: 50,type: "small"},
+                {name: "Latte",
+                coffee: 30,bubble: 30,water: 0,milk: 30,type: "small"}
+                ],
+            }
+        });
+    </script>
+</body>
+</html>
